@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota Fiscal de Serviço</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Emissão de Nota Fiscal de Serviço</h1>
+    <form id="formulario">
+        <label for="valor">Valor do Serviço (R$):</label>
+        <input type="number" id="valor" name="valor" step="0.01" required><br><br>
+
+        <label for="baseCalculo">Base de Cálculo (%):</label>
+        <input type="number" id="baseCalculo" name="baseCalculo" step="0.01" required><br><br>
+
+        <label for="aliquota">Alíquota do PIS (%):</label>
+        <input type="number" id="aliquota" name="aliquota" step="0.01" required><br><br>
+
+        <input type="submit" value="Emitir Nota Fiscal">
+    </form>
+    <br>
+    <h2 id="tituloNotaFiscal"></h2>
+    <table id="tabelaNotaFiscal">
+        <tr>
+            <th>Item</th>
+            <th>Valor</th>
+        </tr>
+        <tr>
+            <td>Valor do Serviço</td>
+            <td id="valorDoServico"></td>
+        </tr>
+        <tr>
+            <td>Base de Cálculo</td>
+            <td id="baseDeCalculo"></td>
+        </tr>
+        <tr>
+            <td>PIS</td>
+            <td id="valorDoPis"></td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td id="total"></td>
+        </tr>
+    </table>
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var valor = parseFloat(document.getElementById('valor').value);
+            var baseCalculo = parseFloat(document.getElementById('baseCalculo').value);
+            var aliquota = parseFloat(document.getElementById('aliquota').value);
+
+            var baseDeCalculo = valor * (baseCalculo / 100);
+            var valorDoPis = baseDeCalculo * (aliquota / 100);
+            var total = valor + valorDoPis;
+
+            document.getElementById('tituloNotaFiscal').innerText = 'Nota Fiscal de Serviço';
+            document.getElementById('valorDoServico').innerText = valor.toFixed(2);
+            document.getElementById('baseDeCalculo').innerText = baseDeCalculo.toFixed(2);
+            document.getElementById('valorDoPis').innerText = valorDoPis.toFixed(2);
+            document.getElementById('total').innerText = total.toFixed(2);
+        });
+    </script>
+</body>
+</html>
